@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Sudoku Lab</title>
+    <meta
+      name="description"
+      content="A futuristic two-stage Sudoku challenge with tutorial guidance, limited hints, and a leaderboard ready for future database wiring."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Unbounded:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="ambient ambient-left"></div>
+      <div class="ambient ambient-right"></div>
+
+      <aside class="panel leaderboard-dock">
+        <div class="panel-header leaderboard-header">
+          <p class="panel-kicker">Live Board</p>
+          <h2>实时时间排名</h2>
+        </div>
+        <div class="leaderboard-meta">
+          <span id="leaderboard-source">连接中</span>
+          <span id="leaderboard-level-label">训练模式</span>
+          <span id="leaderboard-sync-status">等待同步</span>
+        </div>
+        <div id="leaderboard" class="leaderboard-list leaderboard-list-compact"></div>
+      </aside>
+
+      <header class="hero">
+        <div>
+          <p class="eyebrow">STATIC DEPLOYMENT READY</p>
+          <h1>Neon Sudoku Lab</h1>
+          <p class="hero-copy">
+            两个关卡，一次比一次更烧脑。先在训练模式里熟悉规则，再进入高压
+            Hard 模式挑战极限。
+          </p>
+        </div>
+        <div class="hero-badge">
+          <span>2 Levels</span>
+          <span>5 Hints Max</span>
+          <span>Supabase Persistence</span>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel status-panel">
+          <div class="panel-header">
+            <p class="panel-kicker">Pilot</p>
+            <h2>玩家档案</h2>
+          </div>
+          <label class="player-field" for="player-name">
+            <span>昵称</span>
+            <input id="player-name" type="text" maxlength="16" placeholder="输入你的代号" />
+          </label>
+
+          <div class="level-tabs" id="level-tabs">
+            <button class="level-tab is-active" data-level="level-1" type="button">
+              <strong>Level 1</strong>
+              <span>训练模式</span>
+            </button>
+            <button class="level-tab is-locked" data-level="level-2" type="button">
+              <strong>Level 2</strong>
+              <span>深空模式</span>
+            </button>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <span>计时</span>
+              <strong id="timer">00:00</strong>
+            </article>
+            <article class="stat-card">
+              <span>提示剩余</span>
+              <strong id="hint-count">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>完成度</span>
+              <strong id="progress">0 / 81</strong>
+            </article>
+          </div>
+
+          <div class="cta-row">
+            <button id="new-run" class="ghost-button" type="button">重新开始</button>
+            <button id="hint-button" class="primary-button" type="button">使用提示</button>
+          </div>
+
+          <div class="panel-header compact">
+            <p class="panel-kicker">Guide</p>
+            <h2>任务简报</h2>
+          </div>
+          <div class="briefing" id="briefing"></div>
+        </section>
+
+        <section class="board-panel">
+          <div class="board-frame">
+            <div class="board-grid" id="board" role="grid" aria-label="Sudoku board"></div>
+          </div>
+
+          <div class="keypad" id="keypad">
+            <button class="key-button" data-value="1" type="button">1</button>
+            <button class="key-button" data-value="2" type="button">2</button>
+            <button class="key-button" data-value="3" type="button">3</button>
+            <button class="key-button" data-value="4" type="button">4</button>
+            <button class="key-button" data-value="5" type="button">5</button>
+            <button class="key-button" data-value="6" type="button">6</button>
+            <button class="key-button" data-value="7" type="button">7</button>
+            <button class="key-button" data-value="8" type="button">8</button>
+            <button class="key-button" data-value="9" type="button">9</button>
+            <button class="key-button wide" data-value="clear" type="button">清空</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="result-modal" class="result-modal">
+      <div class="modal-card">
+        <p class="panel-kicker">Mission Complete</p>
+        <h2 id="result-title">关卡完成</h2>
+        <p id="result-summary" class="result-summary"></p>
+        <div id="result-ranking" class="leaderboard-list modal-list"></div>
+        <div class="cta-row">
+          <button id="close-modal" class="ghost-button" type="button">继续</button>
+          <button id="next-level" class="primary-button" type="button">进入下一关</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
