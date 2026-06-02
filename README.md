@@ -1,4 +1,4 @@
-# Neon Sudoku Lab
+# DT Sudoku Lab
 
 一个科技风数独小游戏，前端保持纯静态页面，排行榜通过 Vercel API 接入 Supabase Postgres 做持久化。
 
